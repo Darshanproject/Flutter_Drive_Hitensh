@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import "package:http/http.dart" as http;
 import 'package:myapp/main.dart';
 
 class Add_Screen extends StatefulWidget {
@@ -9,16 +11,16 @@ class Add_Screen extends StatefulWidget {
 }
 
 class _Add_ScreenState extends State<Add_Screen> {
-  TextEditingController name_Controller = TextEditingController();
-  TextEditingController surname_Controller = TextEditingController();
-  TextEditingController email_Controller = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController surname = TextEditingController();
+  TextEditingController email = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         children: [
           TextField(
-            controller: name_Controller,
+            controller: name,
             decoration: InputDecoration(
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -26,7 +28,7 @@ class _Add_ScreenState extends State<Add_Screen> {
                 labelText: "Name"),
           ),
           TextField(
-            controller: surname_Controller,
+            controller: surname,
             decoration: InputDecoration(
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -34,7 +36,7 @@ class _Add_ScreenState extends State<Add_Screen> {
                 labelText: "Surname"),
           ),
           TextField(
-            controller: email_Controller,
+            controller: email,
             decoration: InputDecoration(
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -53,5 +55,14 @@ class _Add_ScreenState extends State<Add_Screen> {
         ],
       ),
     );
+  }
+
+  void insertdata() {
+    var url = "https://database20810.000webhostapp.com/FlutterCrude/insert.php";
+    http.post(Uri.parse(url), body: {
+      "name": name.text.toString(),
+      "surname": surname.text.toString(),
+      "email": email.text.toString(),
+    });
   }
 }
